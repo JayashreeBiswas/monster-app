@@ -1,0 +1,61 @@
+⦁	Data Layer and Variable Configuration:
+⦁	How do you configure and use a data layer in tag management tools like Tealium iQ or Google Tag Manager? What role does it play in tracking and managing data on a website?
+⦁	Custom JavaScript Tags:
+⦁	Can you provide an example of how you would implement a custom JavaScript tag in Tealium iQ or GTM? What are the key considerations for handling asynchronous loading and dependencies?
+⦁	Event Tracking:
+⦁	Explain how event tracking is implemented in Tealium iQ or Google Tag Manager. What are the steps involved in setting up and triggering events, and how can you ensure accurate tracking?
+⦁	Cross-Domain Tracking:
+⦁	Discuss the technical steps and considerations for implementing cross-domain tracking using a tag management tool. How would you handle the transfer of data between different domains?
+⦁	Debugging and Troubleshooting:
+⦁	How do you approach debugging and troubleshooting when implementing tags in a tag management tool? What tools and techniques do you use to identify and resolve issues?
+⦁	Data Enrichment and Transformation:
+⦁	In Adobe Data Collection, how can you enrich or transform data before sending it to analytics platforms? Provide an example of a scenario where data transformation is necessary.
+⦁	Data Privacy and Security:
+⦁	Explain the techniques or features provided by tag management tools to ensure data privacy and security compliance, especially in relation to handling personally identifiable information (PII).
+⦁	Container Versioning:
+⦁	How does versioning work in Tealium iQ or Google Tag Manager? Can you explain the importance of versioning, especially in a collaborative development environment?
+⦁	Integration with Third-Party Tools:
+⦁	Discuss the steps involved in integrating a tag management tool with third-party analytics or marketing tools. What considerations should be taken into account during integration?
+⦁	Performance Optimisation:
+⦁	How can you optimise the performance of tags deployed through a tag management tool? Discuss techniques for minimising page load impact and ensuring a smooth user experience.
+Additionally, please explain any best practices or considerations you would keep in mind during this process. As well as discuss any debugging or testing procedures you would employ to validate the correct implementation of the tag.
+
+
+
+
+
+
+
+Example Scenario for Testing Facebook Pixel Integration
+The business has requested the implementation of a meta pixel tag across various brands using the provided snippet of code. The relevant Facebook Pixel IDs for each brand are:
+⦁	Daily Telegraph: '306782539995622'
+⦁	Townsville Bulletin: '22623212840122371'
+⦁	Vogue: '2252558014761225278'
+⦁	GQ: '2115797005178411225'
+The script should only be applied to index and story content pages.
+(function(f, b, e, v, n, t, s){
+   if (f.fbq) return;
+   n = f.fbq = function() {
+       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+   };
+   if (!f._fbq)
+       f._fbq = n;
+   n.push = n;
+   n.loaded = !0;
+   n.version = '2.0';
+   n.queue = [];
+   t = b.createElement(e);
+   t.async = !0;
+   t.src = v;
+   s = b.getElementsByTagName(e)[0];
+   s.parentNode.insertBefore(t, s)
+})(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', [ID]);
+fbq('track', 'PageView');
+
+
+The website's data layer variables define the brands and content types as follows:
+⦁	Brands: A for Daily Telegraph, B for Townsville Bulletin, C for Vogue, D for GQ
+⦁	Content Types: E for index, F for homepage, G for stories
+
+Can you please let us know what are your steps and process on how to solve this request?
