@@ -59,3 +59,45 @@ The website's data layer variables define the brands and content types as follow
 ⦁	Content Types: E for index, F for homepage, G for stories
 
 Can you please let us know what are your steps and process on how to solve this request?
+
+
+
+
+
+
+
+
+
+Example Scenario for Testing Facebook Pixel Integration
+The business has requested the implementation of a meta pixel tag across various brands using the provided snippet of code. The relevant Facebook Pixel IDs for each brand are:
+⦁	Daily Telegraph: '306782539995622'
+⦁	Townsville Bulletin: '22623212840122371'
+⦁	Vogue: '2252558014761225278'
+⦁	GQ: '2115797005178411225'
+The script should only be applied to index and story content pages.
+(function(f, b, e, v, n, t, s){
+   if (f.fbq) return;
+   n = f.fbq = function() {
+       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+   };
+   if (!f._fbq)
+       f._fbq = n;
+   n.push = n;
+   n.loaded = !0;
+   n.version = '2.0';
+   n.queue = [];
+   t = b.createElement(e);
+   t.async = !0;
+   t.src = v;
+   s = b.getElementsByTagName(e)[0];
+   s.parentNode.insertBefore(t, s)
+})(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', [ID]);
+fbq('track', 'PageView');
+
+
+The website's data layer variables define the brands and content types as follows:
+⦁	Brands: A for Daily Telegraph, B for Townsville Bulletin, C for Vogue, D for GQ
+⦁	Content Types: E for index, F for homepage, G for stories
+
+Can you please let us know what are your steps and process on how to solve this request?
