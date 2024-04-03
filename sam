@@ -100,88 +100,49 @@ The website's data layer variables define the brands and content types as follow
 ⦁	Brands: A for Daily Telegraph, B for Townsville Bulletin, C for Vogue, D for GQ
 ⦁	Content Types: E for index, F for homepage, G for stories
 
-Can you please let us know what are your steps and process on how to solve this request?
-Sure, here are the two JSON files:
 
-1. collectiontype.json:
 
-```json
-[
-  {
-    "collectiontype": "home",
-    "collectionid": "home_collection_001",
-    "lastupdated": "2024-04-01T12:00:00Z"
-  },
-  {
-    "collectiontype": "landing",
-    "collectionid": "landing_collection_001",
-    "lastupdated": "2024-04-01T10:30:00Z"
+api.js
+// Function to fetch collection types from the first API endpoint
+async function fetchCollectionTypes() {
+  try {
+    const response = await fetch('/api/collectiontypes');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching collection types:', error);
+    throw error;
   }
-]
-```
-
-2. collection.json:
-
-```json
-[
-  {
-    "article_id": "article_001",
-    "title": "Top 10 Destinations to Visit in 2024",
-    "author": "Travel Enthusiast",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-    "published_date": "2024-03-15T08:00:00Z"
-  },
-  {
-    "article_id": "article_002",
-    "title": "10 Delicious Recipes for Spring",
-    "author": "Foodie Chef",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-    "published_date": "2024-03-20T10:00:00Z"
-  },
-  {
-    "article_id": "article_003",
-    "title": "Latest Trends in Fashion for 2024",
-    "author": "Fashion Guru",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-    "published_date": "2024-03-25T12:00:00Z"
-  },
-  {
-    "article_id": "article_004",
-    "title": "10 Tips for Better Productivity at Work",
-    "author": "Productivity Expert",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-    "published_date": "2024-03-28T15:00:00Z"
-  }
-]
-```
-
-Feel free to adjust the content and structure as needed.
-
-
-
-To fetch and display articles from `collection.json` using JavaScript and API endpoints, you would typically make an AJAX request to the server hosting the JSON file. Below is an example of how you can achieve this using JavaScript:
-
-```javascript
-// Function to fetch articles from collection.json
-function fetchArticles() {
-  // Make an AJAX request
-  fetch('https://example.com/api/collection.json')
-    .then(response => {
-      // Check if the response is successful
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // Parse JSON data
-      return response.json();
-    })
-    .then(data => {
-      // Display articles
-      displayArticles(data);
-    })
-    .catch(error => {
-      console.error('Error fetching articles:', error);
-    });
 }
+
+// Function to fetch articles for a specific collection ID
+async function fetchArticlesForCollection(collectionId) {
+  try {
+    const response = await fetch(`/api/collection/${collectionId}/collection.json`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    throw error;
+  }
+}
+
+// Export functions to be used in other files
+export { fetchCollectionTypes, fetchArticlesForCollection };
+
+
+
+
+
+
+script.js
+import { fetchCollectionTypes, fetchArticlesForCollection } from './api.js';
 
 // Function to display articles
 function displayArticles(articles) {
@@ -205,8 +166,21 @@ function displayArticles(articles) {
   });
 }
 
-// Call fetchArticles function to fetch and display articles
-fetchArticles();
-```
+// Function to fetch collection types and display articles
+async function fetchAndDisplayArticles() {
+  try {
+    // Fetch collection types
+    const collectionTypes = await fetchCollectionTypes();
+    // Extract collection ID, for example, the first one
+    const collectionId = collectionTypes[0].collectionid;
+    // Fetch articles for the chosen collection ID
+    const articles = await fetchArticlesForCollection(collectionId);
+    // Display articles
+    displayArticles(articles);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
-Make sure to replace `'https://example.com/api/collection.json'` with the actual URL of your API endpoint serving `collection.json`. Also, ensure that the HTML contains an element with the id `articles-container` to display the articles.
+// Call fetchAndDisplayArticles function to initiate fetching and displaying of articles
+fetchAndDisplayArticles();
