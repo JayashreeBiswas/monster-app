@@ -193,18 +193,18 @@ fetchAndDisplayArticles();
 
 const arr = [1, 23, 'hello', '32', null, ' ', 0, "0", undefined, NaN];
 
-// Filter out non-number elements and convert remaining elements to numbers
-const filteredArr = arr.filter(item => typeof item === 'number' && !isNaN(item));
+// Filter out non-numeric values and convert strings to numbers
+const numericArr = arr.filter(item => typeof item === 'number' || (!isNaN(Number(item)) && item !== null && item.trim() !== ''));
 
-// Sort the filtered array, placing 0 at the end
-filteredArr.sort((a, b) => {
-    if (a === 0 && b !== 0) {
-        return 1; // Place 0 at the end
-    } else if (a !== 0 && b === 0) {
-        return -1; // Place 0 at the end
-    } else {
-        return a - b; // Sort other numbers normally
+// Convert string representations of numbers to actual numbers
+for (let i = 0; i < numericArr.length; i++) {
+    if (typeof numericArr[i] === 'string') {
+        numericArr[i] = Number(numericArr[i]);
     }
-});
+}
 
-console.log(filteredArr); // Output: [1, 23, 32, 0, 0]
+// Sort the numeric array
+numericArr.sort((a, b) => a - b);
+
+console.log(numericArr); // Output: [1, 23, 32, 0, 0]
+
